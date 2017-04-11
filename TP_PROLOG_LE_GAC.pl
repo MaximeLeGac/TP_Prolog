@@ -84,7 +84,7 @@ xp_reelle(X,Y) :- 						% Cas où la popularité < 10
 	ex : factorielle(10,Y).
 */
 
-factorielle(0,Y) :- Y is 1.
+factorielle(0,Y) :- Y is 1.					% La factorielle de 0 renvoit 1
 factorielle(X,Y) :- 
 	X>0,									% Si X est supérieur à 0
 	X1 is X-1,								% Récupération du chiffre précédent
@@ -104,11 +104,16 @@ factorielle(X,Y) :-
 
 /* 
 	Suite de Lucas
-	ex : suite_lucas(2,5). --> il faudra renseigner le nombre d'iterations souhaitees, ex : 6.
-	ex : suite_lucas(2,1). --> cas degenere
+	ex : suite_lucas(2,5). --> il faudra renseigner le nombre d'itérations souhaitées, ex : 6.
+	ex : suite_lucas(2,1). --> cas dégénéré
 */
 
-% Calcul de la suite récurente linéaire U
+/*
+	Calcul de la suite récurente linéaire U
+	Formule : 	𝑈0(𝑃,𝑄)=0
+				𝑈1(𝑃,𝑄)=1
+				𝑈𝑛(𝑃,𝑄)=𝑃𝑈𝑛−1(𝑃,𝑄)−𝑄𝑈𝑛−2(𝑃,𝑄) 𝑝𝑜𝑢𝑟 𝑛>1
+*/
 suite_u(0,_,_,0).									% 𝑈0(𝑃,𝑄)=0
 suite_u(1,_,_,1).									%	𝑈1(𝑃,𝑄)=1
 suite_u(N,P,Q,R) :- 								%	𝑈𝑛(𝑃,𝑄)=𝑃𝑈𝑛−1(𝑃,𝑄)−𝑄𝑈𝑛−2(𝑃,𝑄) 𝑝𝑜𝑢𝑟 𝑛>1
@@ -118,7 +123,12 @@ suite_u(N,P,Q,R) :- 								%	𝑈𝑛(𝑃,𝑄)=𝑃𝑈𝑛−1(𝑃,𝑄)−
 	suite_u(N2,P,Q,R2),								% Correspond à la partie 𝑈𝑛−2(𝑃,𝑄)
 	R is (P*R1)-(Q*R2).
 
-% Calcul de la suite récurente linéaire V
+/*
+	Calcul de la suite récurente linéaire V
+	Formule : 	𝑉0(𝑃,𝑄)=2
+				𝑉1(𝑃,𝑄)=𝑃
+				𝑉𝑛(𝑃,𝑄)=𝑃𝑉𝑛−1(𝑃,𝑄)−𝑄𝑉𝑛−2(𝑃,𝑄) 𝑝𝑜𝑢𝑟 𝑛>1
+*/
 suite_v(0,_,_,2).									% 𝑉0(𝑃,𝑄)=2
 suite_v(1,P,_,R) :- R is P.							% 𝑉1(𝑃,𝑄)=𝑃
 suite_v(N,P,Q,R) :- 								% 𝑉𝑛(𝑃,𝑄)=𝑃𝑉𝑛−1(𝑃,𝑄)−𝑄𝑉𝑛−2(𝑃,𝑄) 𝑝𝑜𝑢𝑟 𝑛>1
@@ -138,11 +148,11 @@ cas_degeneres(P,Q) :-
 % Calcul des suites de Lucas
 suite_lucas(P,Q) :- 
 	cas_degeneres(P,Q),								% Vérification des entrants
-	writeln('Renseigner le nombre d''iteration'),
+	writeln('Renseigner le nombre d''iteration'),	% Récupération du nombre d'itérations
 	read(N),
-	suite_u(N,P,Q,R1),								% appel de u
-	suite_v(N,P,Q,R2),								% appel de v
-	concat('U vaut ', R1, Log1),
+	suite_u(N,P,Q,R1),								% Appel de U
+	suite_v(N,P,Q,R2),								% Appel de V
+	concat('U vaut ', R1, Log1),					% Affichage des résultats
 	writeln(Log1),
 	concat('V vaut ', R2, Log2),
 	writeln(Log2);
